@@ -1,4 +1,3 @@
-// src/composables/useJuego.spec.ts
 import { describe, it, expect, vi } from 'vitest';
 import { useJuego } from './useJuego';
 import { Carta } from '@/core/Carta';
@@ -6,7 +5,7 @@ import { Carta } from '@/core/Carta';
 describe('useJuego Composable', () => {
     vi.stubGlobal('alert', vi.fn());
   
-  // 1. Test de Inicio [cite: 247]
+  // 1. Test de Inicio
   it('Test de Inicio: Mazo 44, Mano 7, Descarte 1', () => {
     const { iniciarJuego, manoJugador, cartasEnMazo, cartaSuperiorDescarte } = useJuego();
     
@@ -17,32 +16,32 @@ describe('useJuego Composable', () => {
     expect(cartaSuperiorDescarte.value).toBeDefined();
   });
 
-  // 2. Test de Jugada Válida [cite: 248]
+  // 2. Test de Jugada Válida
   it('Test de Jugada Válida: Mueve carta de mano a descarte', () => {
     const { manoJugador, descarte, jugarCarta } = useJuego();
     
     // Forzamos el escenario: Descarte tiene 7 de Corazones
     descarte.value.push(new Carta('Corazones', '7'));
     
-    // Jugador tiene 7 de Picas (coincide en valor)
+    // Jugador tiene 7 de Picas 
     const miCarta = new Carta('Picas', '7');
     manoJugador.value = [miCarta];
 
     jugarCarta(miCarta);
 
     // Verificaciones
-    expect(manoJugador.value.length).toBe(0); // La mano se vacía
+    expect(manoJugador.value.length).toBe(0); // el mazo se vacía
     expect(descarte.value.peek()).toBe(miCarta); // La carta está en el descarte
   });
 
-  // 3. Test de Jugada Inválida [cite: 249]
+  // 3. Test de Jugada Inválida 
   it('Test de Jugada Inválida: El estado no cambia', () => {
     const { manoJugador, descarte, jugarCarta } = useJuego();
     
     // Escenario: Descarte 7 Corazones
     descarte.value.push(new Carta('Corazones', '7'));
     
-    // Jugador intenta jugar Rey de Picas (no coincide nada)
+    // Jugador intenta jugar Rey de Picas 
     const miCarta = new Carta('Picas', 'K');
     manoJugador.value = [miCarta];
 
@@ -53,7 +52,7 @@ describe('useJuego Composable', () => {
     expect(descarte.value.peek()?.valor).toBe('7'); // El descarte no ha cambiado
   });
 
-  // 4. Test de Reconstitución de Mazo [cite: 252, 253]
+  // 4. Test de Reconstitución de Mazo 
   it('Test de Reconstitución: Rellena mazo desde descarte si mazo vacío', () => {
     const { robarCarta, cartasEnMazo, descarte, manoJugador } = useJuego();
 
