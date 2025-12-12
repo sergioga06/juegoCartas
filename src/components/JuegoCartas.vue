@@ -102,20 +102,18 @@ onMounted(() => {
       
       <!-- Flex container: distribuye las cartas en fila -->
       <div class="mano-flex">
-        <!-- v-for: Itera sobre cada carta en la mano del jugador -->
-        <div 
-          v-for="(carta, index) in manoJugador"    <!-- Cada carta de la mano -->
-          :key="index"                              <!-- Vue necesita una clave única -->
-          class="carta jugable"                      <!-- Clase para hacer la carta interactiva -->
-          :class="{ 'rojo': esRojo(carta.palo) }"   <!-- Añade clase 'rojo' si es Corazones o Diamantes -->
-          @click="jugarCarta(carta)"                 <!-- Al hacer clic, juega la carta -->
-        >
-          <!-- La estructura visual es igual que en el descarte -->
-          <span class="valor-esquina">{{ carta.valor }}</span>
-          <span class="palo-central">{{ obtenerSimbolo(carta.palo) }}</span>
-          <span class="valor-esquina invertido">{{ carta.valor }}</span>
-        </div>
-      </div>
+  <div 
+    v-for="(carta, index) in manoJugador"
+    :key="index"
+    class="carta jugable"
+    :class="{ 'rojo': esRojo(carta.palo) }"
+    @click="jugarCarta(carta)"
+  >
+    <span class="valor-esquina">{{ carta.valor }}</span>
+    <span class="palo-central">{{ obtenerSimbolo(carta.palo) }}</span>
+    <span class="valor-esquina invertido">{{ carta.valor }}</span>
+  </div>
+</div>
       
       <!-- Mensaje de victoria si no quedan cartas -->
       <p v-if="manoJugador.length === 0" class="mensaje-victoria">¡Has ganado!</p>
